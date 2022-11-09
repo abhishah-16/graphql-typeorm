@@ -16,7 +16,7 @@ export class Note extends BaseEntity {
 
     @PrimaryGeneratedColumn('uuid')
     @Field(() => String)
-    id: number
+    id: string
 
     @Column()
     @Field(() => String)

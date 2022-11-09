@@ -16,7 +16,10 @@ export class notesResolver {
 
     @Mutation(() => Note)
     @UseMiddleware(isAuth)
-    async addNote(@Arg("title") title: string, @Arg("content") content: string, @Ctx() ctx: MyContext) {
+    async addNote(
+        @Arg("title") title: string,
+        @Arg("content") content: string,
+        @Ctx() ctx: MyContext) {
         try {
             const payload = ctx.payload
             const user = await User.findOne({ where: { id: payload.id } })
@@ -26,6 +29,45 @@ export class notesResolver {
             newNote.createdBy = user
             await newNote.save()
             return newNote
+        } catch (error) {
+            throw new Error(error)
+        }
+    }
+
+    @Mutation(() => Note)
+    @UseMiddleware(isAuth)
+    async updateNote(
+        @Arg("title") title: string,
+        @Arg("content") content: string,
+        @Arg("noteId") noteId: string,
+        @Ctx() ctx: MyContext
+    ) {
+        try {
+            const note = await Note.findOne({ where: { id: noteId }, relations: ["createdBy"] })
+            if (!note) {
+                throw new Error('Note not found')
+            }
+            note.title = title
+            note.content = content
+            await note.save()
+            return note
+        } catch (error) {
+            throw new Error(error)
+        }
+    }
+
+    @Mutation(() => String)
+    @UseMiddleware(isAuth)
+    async deleteNote(
+        @Arg("noteId") noteId: string
+    ) {
+        try {
+            const note = await Note.findOne({ where: { id: noteId }, relations: ["createdBy"] })
+            if (!note) {
+                throw new Error("Note not found")
+            }
+            note.remove()
+            return ("Note is Deleted")
         } catch (error) {
             throw new Error(error)
         }
