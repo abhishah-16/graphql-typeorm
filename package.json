@@ -1,0 +1,29 @@
+{
+   "name": "server",
+   "version": "0.0.1",
+   "description": "Awesome project developed with TypeORM.",
+   "type": "commonjs",
+   "devDependencies": {
+      "@types/node": "^16.11.10",
+      "nodemon": "^2.0.20",
+      "ts-node": "10.7.0",
+      "typescript": "4.5.2"
+   },
+   "dependencies": {
+      "apollo-server": "^3.10.3",
+      "apollo-server-express": "^3.10.3",
+      "bcryptjs": "^2.4.3",
+      "cookie-parser": "^1.4.6",
+      "cors": "^2.8.5",
+      "express": "^4.18.2",
+      "jsonwebtoken": "^8.5.1",
+      "pg": "^8.8.0",
+      "reflect-metadata": "^0.1.13",
+      "type-graphql": "^1.1.1",
+      "typeorm": "0.3.10"
+   },
+   "scripts": {
+      "start": "nodemon -L --exec ts-node src/index.ts",
+      "typeorm": "typeorm-ts-node-commonjs"
+   }
+}
